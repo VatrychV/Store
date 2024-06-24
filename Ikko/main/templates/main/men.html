@@ -1,0 +1,72 @@
+{% extends "./main.html" %}
+{%load static%}
+{%block content%}
+<style>
+    /* Збільшення розміру зображень */
+    .products .col-md1.simpleCart_shelfItem img {
+        width: 100%; /* Збільшення ширини зображення */
+        height: 300px; /* Збільшення висоти зображення */
+        object-fit: cover; /* Обрізання зображення, щоб заповнити контейнер */
+    }
+</style>
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
+            <li><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+            <li class="active">Men</li>
+        </ol>
+    </div>
+</div>
+<div class="products">
+    <div class="container">
+        <h2>Men</h2>
+        <div class="col-md-9">
+            <div class="content-top1">
+                <div class="row">
+                    {% for product in products %}
+                    <div class="col-md-4 col-md-4">
+                        <div class="col-md1 simpleCart_shelfItem">
+                            <a href="{% url 'shop:single' product_id=product.id %}">
+                                <img class="img-responsive" src="{{ product.imageURL }}" alt="" />
+                            </a>
+                            <h3><a href="{% url 'shop:single' product_id=product.id %}">{{ product.name }}</a></h3>
+                            <div class="price">
+                                <h5 class="item_price">${{ product.price }}</h5>
+                                <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart" style="color: #fa03bb;">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+						<div id="user" data-user="{% if user.is_authenticated %}{{ user }}{% else %}Anonymous{% endif %}"></div>
+						 <div class="col-md-3 product-bottom">
+								<script type="text/javascript">
+									// Отримати токен CSRF з cookie
+									function getToken(name){
+										var cookieValue = null;
+										if (document.cookie && document.cookie !== ''){
+											var cookies = document.cookie.split(';');
+											for (var i = 0; i < cookies.length; i++) {
+												var cookie = cookies[i].trim();
+												if (cookie.substring(0, name.length + 1) === (name + '=')) {
+													cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+													break;
+												}
+											}
+										}
+										return cookieValue;
+									}
+								</script>
+								<script type="text/javascript" src="{%static 'js/cart.js'%}"></script>
+										{%endblock content%}
+					
+									
+									

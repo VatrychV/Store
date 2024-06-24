@@ -1,0 +1,1 @@
+web: gunicorn Ikko.wsgi --log-file -
